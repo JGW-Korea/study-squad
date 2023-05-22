@@ -1,21 +1,28 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const { sequelize } = require("./models");
 
 const app = express();
 
+app.set("port", process.env.PORT || 8000);
+
+sequelize
+  .sync({ force: true })
+  .then(() => {
+    console.log("DB 연결 성공");
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-const port = 4000;
-
-app.get("/", (req, res) => {
-  res.send("HWorld!");
-});
+app.use(require("./routes"));
 
 app.get("/api/hello", (req, res) => {
-  res.send("안녕하세요");
+  res.send("hello");
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+app.listen(app.get("port"), () => {
+  console.log(`Example app listening on port ${app.get("port")}`);
 });

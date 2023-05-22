@@ -1,15 +1,19 @@
-import React, { useEffect } from "react";
-import axios from "axios";
+// 모듈 import
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// Pages import
+import Home from "./pages/Home/Home";
+import Register from "./pages/User/Register/Register";
 
 function App() {
-  useEffect(() => {
-    axios.get("/api/hello").then((res) => console.log(res.data));
-  }, []);
-
   return (
-    <div>
-      <h2>hello</h2>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/register" element={<Register />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
