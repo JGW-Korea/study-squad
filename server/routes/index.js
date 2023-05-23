@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const userRoute = require("../controllers/user/register/register");
+const userRoute = require("../controllers/user/index.js");
 
 router.use("/api/user", userRoute);
 

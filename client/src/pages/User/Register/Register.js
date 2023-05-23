@@ -8,6 +8,8 @@ function Register() {
   const [birth, setBirth] = useState("");
   const [gender, setGender] = useState("");
 
+  const [emailMessage, setEmailMessage] = useState("");
+
   const onEmailHandler = (event) => {
     setEmail(event.target.value);
   };
@@ -42,6 +44,20 @@ function Register() {
       });
   };
 
+  const onBlur = () => {
+    if (email !== "") {
+      Axios.post("/api/user/idCheck", {
+        email: email,
+      }).then((res) => {
+        if (!res.data.duplicate) {
+          setEmailMessage("사용 가능한 이메일 입니다.");
+        } else {
+          setEmailMessage("중복된 이메일 입니다.");
+        }
+      });
+    }
+  };
+
   return (
     <form onSubmit={onSubmit}>
       <header>회원가입</header>
@@ -52,8 +68,10 @@ function Register() {
             type="email"
             value={email}
             onChange={onEmailHandler}
+            onBlur={onBlur}
             placeholder={"이메일"}
           />
+          <span>{emailMessage}</span>
         </div>
         <div>
           <span>비밀번호</span>

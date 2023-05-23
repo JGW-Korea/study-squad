@@ -7,7 +7,7 @@ const app = express();
 app.set("port", process.env.PORT || 8000);
 
 sequelize
-  .sync({ force: true })
+  .sync({ force: false })
   .then(() => {
     console.log("DB 연결 성공");
   })
