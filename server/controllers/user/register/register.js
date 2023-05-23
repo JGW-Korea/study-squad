@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const db = require("../../../models/index.js");
-const User = db.users;
+const User = db.User;
 
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -22,12 +22,11 @@ router.post("/register", async (req, res) => {
     const hash = await bcrypt.hash(createPassword, salt);
 
     await User.create({
-      registrationNum: 1,
-      user_mail: createEmail,
-      user_password: hash,
-      user_name: createName,
-      user_birth: createBirth,
-      user_gender: createGender,
+      email: createEmail,
+      password: hash,
+      name: createName,
+      birth: createBirth,
+      gender: createGender,
     });
 
     res.status(201).send("User created successfully");
