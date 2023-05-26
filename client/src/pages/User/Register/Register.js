@@ -37,10 +37,10 @@ function Register() {
     event.preventDefault();
 
     Axios.post("/api/user/register", {
-      createEmail: email,
-      createPassword: password,
-      createName: name,
-      createBirth: `${year}-${month}-${day}`,
+      email: email,
+      password: password,
+      name: name,
+      birth: `${year}-${month}-${day}`,
     })
       .then((res) => {
         console.log(res);
