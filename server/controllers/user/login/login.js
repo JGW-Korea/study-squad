@@ -37,7 +37,16 @@ router.post("/", async (req, res) => {
       } else {
         // 이메일에 맞는 비밀번호라면 세션을 생성한다.
         req.session.save(() => {
-          req.session.userId = userInfo.email;
+          req.session.userId = {
+            id: userInfo.id,
+            isAdmin: userInfo.role === "user" ? false : true,
+            isLoggingIn: true,
+            email: userInfo.email,
+            name: userInfo.name,
+            role: userInfo.role,
+            profileImage: userInfo.profileImage,
+            birth: userInfo.birth,
+          };
           res.json({
             loginSuccess: true,
             data: userInfo.email,

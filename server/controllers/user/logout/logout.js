@@ -12,7 +12,10 @@ router.post("/", async (req, res) => {
   } else {
     // logout을 하기위해 session 값을 삭제한다.
     req.session.destroy(() => {
-      res.status(200).json({ message: "logout success" });
+      res.status(200).json({
+        logoutSuccess: true,
+        message: "logout success",
+      });
     });
   }
 });

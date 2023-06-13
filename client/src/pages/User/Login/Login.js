@@ -1,7 +1,13 @@
 import React, { useState } from "react";
-import Axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../../_actions/user_actions";
 
 export default function Login() {
+  const dispatch = useDispatch();
+  const navigation = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -13,38 +19,20 @@ export default function Login() {
     setPassword(event.target.value);
   };
 
-  const onClick = (event) => {
+  const onLoginSubmitHandler = (event) => {
     event.preventDefault();
 
-    Axios.post("/api/user/login", {
+    let body = {
       email: email,
       password: password,
-    }).then((res) => {
-      console.log(res);
-    });
-  };
+    };
 
-  const showCookie = (event) => {
-    event.preventDefault();
-
-    Axios.get("/api/cookie").then((res) => {
-      console.log(res);
-    });
-  };
-
-  const showSession = (event) => {
-    event.preventDefault();
-
-    Axios.get("/api/session").then((res) => {
-      console.log(res);
-    });
-  };
-
-  const logout = (event) => {
-    event.preventDefault();
-
-    Axios.post("/api/user/logout").then((res) => {
-      console.log(res);
+    dispatch(loginUser(body)).then((res) => {
+      if (res.payload.loginSuccess) {
+        navigation("/");
+      } else {
+        console.log("error");
+      }
     });
   };
 
@@ -67,16 +55,7 @@ export default function Login() {
         />
       </div>
       <div>
-        <button onClick={onClick}>로그인</button>
-      </div>
-
-      <div>
-        <button onClick={showCookie}>cookie</button>
-        <button onClick={showSession}>get session</button>
-      </div>
-
-      <div>
-        <button onClick={logout}>로그아웃</button>
+        <button onClick={onLoginSubmitHandler}>로그인</button>
       </div>
     </form>
   );

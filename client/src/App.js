@@ -3,20 +3,23 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Pages import
-import Home from "./pages/Home/Home";
-import Register from "./pages/User/Register/Register";
-import Login from "./pages/User/Login/Login";
+import LandingPage from "./pages/Home/Home";
+import RegisterPage from "./pages/User/Register/Register";
+import LoginPage from "./pages/User/Login/Login";
+import Auth from "./hoc/auth";
 
-function App() {
+export default function App() {
+  const NewLandingPage = Auth(LandingPage, null);
+  const NewLoginPage = Auth(LoginPage, false);
+  const NewRegisterPage = Auth(RegisterPage, false);
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/register" element={<Register />}></Route>
-        <Route path="/login" element={<Login />}></Route>
+        <Route path="/" element={<NewLandingPage />}></Route>
+        <Route path="/register" element={<NewRegisterPage />}></Route>
+        <Route path="/login" element={<NewLoginPage />}></Route>
       </Routes>
     </BrowserRouter>
   );
 }
-
-export default App;

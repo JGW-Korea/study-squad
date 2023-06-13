@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
+      profileImage: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -29,6 +33,11 @@ module.exports = (sequelize, DataTypes) => {
       birth: {
         type: DataTypes.DATE,
         allowNull: false,
+      },
+      role: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "user",
       },
     },
     {

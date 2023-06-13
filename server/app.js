@@ -64,8 +64,9 @@ app.use("/", (req, res, next) => {
 });
 
 app.get("/api/session", (req, res) => {
+  const data = req.session;
   res.json({
-    message: "session information",
+    data: data,
   });
 });
 

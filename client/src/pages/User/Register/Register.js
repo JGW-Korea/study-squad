@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import Axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import { YEAR } from "../../../constants/Register/YEAR";
 import { MONTH } from "../../../constants/Register/MONTH";
 import { DAY } from "../../../constants/Register/DAY";
 
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../../_actions/user_actions";
+
 export default function Register() {
+  const dispatch = useDispatch();
+  const navigation = useNavigate();
+
   const [userInput, setUserInput] = useState({
     email: "",
     password: "",
@@ -33,21 +40,21 @@ export default function Register() {
     setUserInput({ ...userInput, [name]: value });
   };
 
-  const onSubmit = (event) => {
+  const onRegisterSubmitHandler = (event) => {
     event.preventDefault();
 
-    Axios.post("/api/user/register", {
+    let body = {
       email: email,
       password: password,
       name: name,
       birth: `${year}-${month}-${day}`,
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    };
+
+    dispatch(registerUser(body)).then((res) => {
+      if (res.payload.registerSuccess) {
+        navigation("/login");
+      }
+    });
   };
 
   const onEmailCheck = () => {
@@ -153,7 +160,7 @@ export default function Register() {
           </select>
         </div>
         <div>
-          <button disabled={!activeBtn} onClick={onSubmit}>
+          <button disabled={!activeBtn} onClick={onRegisterSubmitHandler}>
             회원가입
           </button>
         </div>
