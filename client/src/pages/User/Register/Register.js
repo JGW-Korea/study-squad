@@ -5,7 +5,7 @@ import { YEAR } from "../../../constants/Register/YEAR";
 import { MONTH } from "../../../constants/Register/MONTH";
 import { DAY } from "../../../constants/Register/DAY";
 
-function Register() {
+export default function Register() {
   const [userInput, setUserInput] = useState({
     email: "",
     password: "",
@@ -161,5 +161,3 @@ function Register() {
     </form>
   );
 }
-
-export default Register;
