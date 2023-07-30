@@ -32,7 +32,7 @@ router.post("/", async (req, res) => {
     // 실패하면 err을 보여주고 Client에 실패된 정보들을 보내준다.
     console.log(error);
     res.json({
-      success: false,
+      registerSuccess: false,
     });
   }
 });

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../../_actions/user_actions";
@@ -35,7 +35,6 @@ export default function Login() {
       }
     });
   };
-
   return (
     <form>
       <div>
@@ -56,6 +55,9 @@ export default function Login() {
       </div>
       <div>
         <button onClick={onLoginSubmitHandler}>로그인</button>
+        <Link to={"/findpassword"}>
+          <button>비밀번호 찾기</button>
+        </Link>
       </div>
     </form>
   );

@@ -1,6 +1,12 @@
 import Axios from "axios";
 
-import { LOGIN_USER, REGISTER_USER, AUTH_USER } from "./types.js";
+import {
+  LOGIN_USER,
+  REGISTER_USER,
+  AUTH_USER,
+  FIND_USER_PASSWORD,
+  USER_PASSWORD_RESET,
+} from "./types.js";
 
 export function loginUser(dataToSubmit) {
   const request = Axios.post("/api/user/login", {
@@ -14,6 +20,7 @@ export function loginUser(dataToSubmit) {
   };
 }
 
+// 회원가입
 export function registerUser(dataToSubmit) {
   const request = Axios.post("/api/user/register", {
     email: dataToSubmit.email,
@@ -32,6 +39,40 @@ export function registerUser(dataToSubmit) {
   };
 }
 
+export function findUserPassword(dataToSubmit) {
+  const request = Axios.post("/api/user/passwordModify/finduserpassword", {
+    email: dataToSubmit.email,
+    name: dataToSubmit.name,
+  })
+    .then((res) => res.data)
+    .catch((err) => {
+      console.log(err);
+    });
+
+  return {
+    type: FIND_USER_PASSWORD,
+    payload: request,
+  };
+}
+
+export function userPasswordReset(dataToSubmit) {
+  const request = Axios.post("/api/user/passwordModify/userpasswordreset", {
+    email: dataToSubmit.email,
+    name: dataToSubmit.name,
+    password: dataToSubmit.password,
+  })
+    .then((res) => res.data)
+    .catch((err) => {
+      console.log(err);
+    });
+
+  return {
+    type: USER_PASSWORD_RESET,
+    payload: request,
+  };
+}
+
+// 로그인 상태를 확인한다.
 export function auth() {
   const request = Axios.get("/api/user/loginCheck").then((res) => res.data);
 

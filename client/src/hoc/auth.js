@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../_actions/user_actions";
 
 export default function (SpecificComponent, option, adminRoute = null) {
-  function AuthenticationCheck(props) {
+  function AuthenticationCheck() {
     const dispatch = useDispatch();
     const navigation = useNavigate();
 
