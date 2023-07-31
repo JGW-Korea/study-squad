@@ -11,6 +11,8 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleIdInput = (event) => {
     setEmail(event.target.value);
   };
@@ -22,18 +24,25 @@ export default function Login() {
   const onLoginSubmitHandler = (event) => {
     event.preventDefault();
 
-    let body = {
-      email: email,
-      password: password,
-    };
+    if (email === "") {
+      setErrorMessage("idError");
+    } else if (password === "") {
+      setErrorMessage("pwdError");
+    } else {
+      let body = {
+        email: email,
+        password: password,
+      };
 
-    dispatch(loginUser(body)).then((res) => {
-      if (res.payload.loginSuccess) {
-        navigation("/");
-      } else {
-        console.log("error");
-      }
-    });
+      dispatch(loginUser(body)).then((res) => {
+        if (res.payload.loginSuccess) {
+          setErrorMessage("");
+          navigation("/");
+        } else {
+          setErrorMessage("loginError");
+        }
+      });
+    }
   };
   return (
     <form>
@@ -52,6 +61,18 @@ export default function Login() {
           onChange={handlePasswordInput}
           placeholder="비밀번호를 입력해주세요."
         />
+      </div>
+      <div>
+        {errorMessage === "idError" ? (
+          <span>아이디를 입력해주세요</span>
+        ) : errorMessage === "pwdError" ? (
+          <span>비밀번호를 입력해주세요</span>
+        ) : errorMessage === "loginError" ? (
+          <div>
+            <span>이메일 또는 비밀번호를 잘못 입력했습니다.</span>
+            <span>입력하신 내용을 다시 확인해주세요.</span>
+          </div>
+        ) : null}
       </div>
       <div>
         <button onClick={onLoginSubmitHandler}>로그인</button>

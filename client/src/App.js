@@ -14,6 +14,8 @@ export default function App() {
   const NewLandingPage = Auth(LandingPage, null);
   const NewLoginPage = Auth(LoginPage, false);
   const NewRegisterPage = Auth(RegisterPage, false);
+  const NewFindPasswordPage = Auth(FindPassword, false);
+  const NewResetPasswordPage = Auth(ResetPassword, false);
 
   return (
     <BrowserRouter>
@@ -21,8 +23,8 @@ export default function App() {
         <Route path="/" element={<NewLandingPage />} />
         <Route path="/register" element={<NewRegisterPage />} />
         <Route path="/login" element={<NewLoginPage />} />
-        <Route path="/findpassword" element={<FindPassword />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route path="/findpassword" element={<NewFindPasswordPage />} />
+        <Route path="/resetpassword" element={<NewResetPasswordPage />} />
       </Routes>
     </BrowserRouter>
   );
