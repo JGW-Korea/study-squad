@@ -47,15 +47,29 @@ router.post("/", async (req, res) => {
             profileImage: userInfo.profileImage,
             birth: userInfo.birth,
           };
+
+          const data = req.session;
+
           res.json({
             loginSuccess: true,
-            data: userInfo.email,
+            data: data,
           });
         });
       }
     }
   } catch (error) {
     console.log("err");
+  }
+});
+
+router.get("/success", (req, res) => {
+  try {
+    const data = req.session;
+    res.status(200).json({
+      data: data,
+    });
+  } catch (error) {
+    res.status(403).json("User Not Found");
   }
 });
 

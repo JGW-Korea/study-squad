@@ -9,8 +9,7 @@ router.get("/", async (req, res) => {
       data: data,
     });
   } catch (error) {
-    console.log("에러");
-    next(error);
+    res.status(403).json("User Not Found");
   }
 });
 

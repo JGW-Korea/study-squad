@@ -62,30 +62,6 @@ router.post("/userpasswordreset", async (req, res) => {
       userPasswordResetSuccess: false,
     });
   }
-
-  // try {
-  //   const user = await User.findOne({
-  //     attributes: ["email", "name"],
-  //     where: {
-  //       email: { [Op.eq]: email },
-  //       name: { [Op.eq]: name },
-  //     },
-  //   });
-
-  //   if (user !== null) {
-  //     res.json({
-  //       findUserEmail: true,
-  //       data: user,
-  //     });
-  //   } else {
-  //     res.json({
-  //       findUserEmail: false,
-  //     });
-  //   }
-  // } catch (error) {
-  //   console.log("에러");
-  //   next(error);
-  // }
 });
 
 module.exports = router;
