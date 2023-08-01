@@ -29,7 +29,7 @@ function FindPassword() {
 
     dispatch(findUserPassword(body)).then((res) => {
       if (res.payload.findUserEmail) {
-        navigation("/resetpassword", {
+        navigation(`/user/help/pwInquiry/${body.name}/${body.email}`, {
           state: res.payload.data,
         });
       } else {

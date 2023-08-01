@@ -3,14 +3,12 @@ import { useDispatch } from "react-redux";
 
 import { userPasswordReset } from "../../../_actions/user_actions";
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function ResetPassword() {
   const dispatch = useDispatch();
   const navigation = useNavigate();
-
-  const location = useLocation();
-  const userInfo = { ...location.state };
+  const params = useParams();
 
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
@@ -60,14 +58,14 @@ function ResetPassword() {
     event.preventDefault();
 
     let body = {
-      email: userInfo.email,
-      name: userInfo.name,
+      email: params.email,
+      name: params.name,
       password: newPassword,
     };
 
     dispatch(userPasswordReset(body)).then((res) => {
       if (res.payload.userPasswordResetSuccess) {
-        navigation("/login");
+        navigation("/user/login");
       }
     });
   };
@@ -78,7 +76,7 @@ function ResetPassword() {
 
       <form>
         <div>
-          <span>아이디: {userInfo.email}</span>
+          <span>아이디: {params.email}</span>
         </div>
         <div>
           <input

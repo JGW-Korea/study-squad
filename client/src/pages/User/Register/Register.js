@@ -52,7 +52,7 @@ export default function Register() {
 
     dispatch(registerUser(body)).then((res) => {
       if (res.payload.registerSuccess) {
-        navigation("/login");
+        navigation("/user/login");
       }
     });
   };

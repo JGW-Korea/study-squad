@@ -10,13 +10,14 @@ export default function Home() {
   const dispatch = useDispatch();
 
   const [login, setLogin] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
 
   const onLogoutSubmitHandler = (event) => {
     event.preventDefault();
 
     Axios.post("/api/user/logout").then((res) => {
       if (res.data.logoutSuccess) {
-        navigation("/login");
+        navigation("/user/login");
       }
     });
   };
@@ -24,23 +25,27 @@ export default function Home() {
   useEffect(() => {
     dispatch(auth()).then((res) => {
       if (res.payload.data.userId) {
+        setUserInfo(res.payload.data.userId);
         setLogin(true);
       } else {
         setLogin(false);
       }
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       {login ? (
         <div>
           <button onClick={onLogoutSubmitHandler}>로그아웃</button>
+          <Link to={`/user/mypage/${userInfo.name}`} state={{ data: userInfo }}>
+            계정
+          </Link>
         </div>
       ) : (
         <div>
-          <Link to={"/register"}>회원가입</Link>
-          <Link to={"/login"}>로그인</Link>
+          <Link to={"/user/register"}>회원가입</Link>
+          <Link to={"/user/login"}>로그인</Link>
         </div>
       )}
     </div>

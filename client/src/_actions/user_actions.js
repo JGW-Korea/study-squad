@@ -6,6 +6,7 @@ import {
   AUTH_USER,
   FIND_USER_PASSWORD,
   USER_PASSWORD_RESET,
+  DELETE_USER_ACCOUNT,
 } from "./types.js";
 
 export function loginUser(dataToSubmit) {
@@ -72,9 +73,32 @@ export function userPasswordReset(dataToSubmit) {
   };
 }
 
+export function deleteUserAccount(dataToSubmit) {
+  const request = Axios.delete("/api/user/deleteUserAccount", {
+    data: {
+      id: dataToSubmit.id,
+      email: dataToSubmit.email,
+      name: dataToSubmit.name,
+    },
+  })
+    .then((res) => res.data)
+    .catch((err) => {
+      console.log(err);
+    });
+
+  return {
+    type: DELETE_USER_ACCOUNT,
+    payload: request,
+  };
+}
+
 // 로그인 상태를 확인한다.
 export function auth() {
-  const request = Axios.get("/api/user/loginCheck").then((res) => res.data);
+  const request = Axios.get("/api/user/login/success")
+    .then((res) => res.data)
+    .catch((err) => {
+      console.log(err);
+    });
 
   return {
     type: AUTH_USER,

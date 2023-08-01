@@ -4,6 +4,7 @@ import {
   AUTH_USER,
   FIND_USER_PASSWORD,
   USER_PASSWORD_RESET,
+  DELETE_USER_ACCOUNT,
 } from "../_actions/types";
 
 export default function (state = {}, action) {
@@ -18,6 +19,8 @@ export default function (state = {}, action) {
       return { ...state, findUserPassword: action.payload };
     case USER_PASSWORD_RESET:
       return { ...state, userPasswordReset: action.payload };
+    case DELETE_USER_ACCOUNT:
+      return { ...state, deleteUserAccount: action.payload };
     default:
       return state;
   }

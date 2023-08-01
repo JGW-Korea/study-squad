@@ -76,7 +76,7 @@ export default function Login() {
       </div>
       <div>
         <button onClick={onLoginSubmitHandler}>로그인</button>
-        <Link to={"/findpassword"}>
+        <Link to={"/user/help/pwInquiry"}>
           <button>비밀번호 찾기</button>
         </Link>
       </div>
