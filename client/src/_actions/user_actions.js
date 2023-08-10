@@ -7,6 +7,8 @@ import {
   FIND_USER_PASSWORD,
   USER_PASSWORD_RESET,
   DELETE_USER_ACCOUNT,
+  PROFILE_IMAGE_UPLOAD,
+  PROFILE_IMAGE_UPDATE,
 } from "./types.js";
 
 export function loginUser(dataToSubmit) {
@@ -92,8 +94,58 @@ export function deleteUserAccount(dataToSubmit) {
   };
 }
 
+export function profileImageUpload(dataToSubmit) {
+  const formData = new FormData();
+
+  formData.append("image", dataToSubmit.userProfileImageInfo);
+
+  const request = Axios.post("/api/user/mypage/profile/upload", formData, {
+    headers: { "content-type": "multipart/form-data" },
+  })
+    .then((res) => res.data)
+    .catch((err) => {
+      console.log(err);
+    });
+
+  return {
+    type: PROFILE_IMAGE_UPLOAD,
+    payload: request,
+  };
+}
+
+export function profileImageUpdate(dataToSubmit) {
+  const request = Axios.post("/api/user/mypage/profile/update", {
+    email: dataToSubmit.userEmail,
+    name: dataToSubmit.userName,
+    path: dataToSubmit.profileImgPath,
+  })
+
+    .then((res) => res.data)
+    .catch((err) => {
+      console.log(err);
+    });
+
+  return {
+    type: PROFILE_IMAGE_UPDATE,
+    payload: request,
+  };
+}
+
 // 로그인 상태를 확인한다.
 export function auth() {
+  const request = Axios.get("/api/user/loginCheck")
+    .then((res) => res.data)
+    .catch((err) => {
+      console.log(err);
+    });
+
+  return {
+    type: AUTH_USER,
+    payload: request,
+  };
+}
+
+export function auth2() {
   const request = Axios.get("/api/user/login/success")
     .then((res) => res.data)
     .catch((err) => {

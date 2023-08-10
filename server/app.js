@@ -3,6 +3,9 @@ const bodyParser = require("body-parser");
 const { sequelize } = require("./models");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
+const path = require("path");
+
+const cors = require("cors");
 
 const session = require("express-session");
 const FileStore = require("session-file-store")(session);
@@ -11,8 +14,16 @@ const app = express();
 dotenv.config();
 
 app.use(cookieParser("secretCode"));
+app.use("/uploads", express.static(path.join(__dirname, "./uploads")));
 
 app.set("port", process.env.PORT || 8000);
+
+let corsOptions = {
+  origin: "http://localhost:3000/",
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 sequelize
   .sync({ force: false })
@@ -69,6 +80,8 @@ app.get("/api/session", (req, res) => {
     data: data,
   });
 });
+
+app.use("/uploads", express.static("uploads"));
 
 app.listen(app.get("port"), () => {
   console.log(`Example app listening on port ${app.get("port")}`);

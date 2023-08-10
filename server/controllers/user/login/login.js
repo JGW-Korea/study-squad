@@ -63,13 +63,15 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/success", (req, res) => {
-  try {
-    const data = req.session;
-    res.status(200).json({
-      data: data,
+  if (req.session.userId) {
+    res.json({
+      isLogged: true,
+      data: req.session.userId,
     });
-  } catch (error) {
-    res.status(403).json("User Not Found");
+  } else {
+    res.json({
+      isLogged: false,
+    });
   }
 });
 

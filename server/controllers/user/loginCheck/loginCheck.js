@@ -4,9 +4,8 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const data = req.session;
     res.status(200).json({
-      data: data,
+      data: req.session,
     });
   } catch (error) {
     res.status(403).json("User Not Found");
