@@ -7,6 +7,8 @@ import {
   DELETE_USER_ACCOUNT,
   PROFILE_IMAGE_UPLOAD,
   PROFILE_IMAGE_UPDATE,
+  USER_CHANGE_EMAIL,
+  USER_CHANGE_PASSWORD,
 } from "../_actions/types";
 
 export default function (state = {}, action) {
@@ -27,6 +29,10 @@ export default function (state = {}, action) {
       return { ...state, profileImageUpload: action.payload };
     case PROFILE_IMAGE_UPDATE:
       return { ...state, profileImageUpdate: action.payload };
+    case USER_CHANGE_EMAIL:
+      return { ...state, userChangeEmail: action.payload };
+    case USER_CHANGE_EMAIL:
+      return { ...state, userChangePassword: action.payload };
     default:
       return state;
   }

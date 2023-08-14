@@ -1,5 +1,3 @@
-import Axios from "axios";
-
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -7,7 +5,9 @@ import {
   deleteUserAccount,
   profileImageUpload,
   profileImageUpdate,
-  auth2,
+  auth,
+  userChangeEmail,
+  userChangePassword,
 } from "../../../_actions/user_actions";
 import { useNavigate } from "react-router-dom";
 
@@ -17,6 +17,17 @@ function MyPage() {
   const dispatch = useDispatch();
 
   const [userInfo, setUserInfo] = useState("");
+
+  const [changeEmail, setChangeEmail] = useState("");
+
+  const [usePassword, setUsePassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+
+  const [usePasswordMessage, setUsePasswordMessage] = useState("");
+  const [newPasswordMessage, setNewPasswordMessage] = useState("");
+  const [passworConfirmdMessage, setPassworConfirmdMessage] = useState("");
 
   const [imagePrivewSrc, setImagePrivewSrc] = useState("");
   const [imageInfoFile, setImageInfoFile] = useState("");
@@ -57,7 +68,7 @@ function MyPage() {
     setImageInfoFile(event.target.files[0]);
   };
 
-  const onSubmitHandler = async (event) => {
+  const onProfileChangeSubmitHandler = async (event) => {
     event.preventDefault();
 
     let body = {
@@ -84,7 +95,7 @@ function MyPage() {
   };
 
   useEffect(() => {
-    dispatch(auth2()).then((res) => {
+    dispatch(auth()).then((res) => {
       if (res.payload) {
         if (res.payload.isLogged) {
           setUserInfo(res.payload.data);
@@ -93,7 +104,76 @@ function MyPage() {
     });
   }, []);
 
-  console.log(userInfo);
+  const setEmail = (event) => {
+    setChangeEmail(event.target.value);
+  };
+
+  const onEmailChangeHandler = (event) => {
+    event.preventDefault();
+
+    let body = {
+      email: changeEmail,
+    };
+
+    dispatch(userChangeEmail(body)).then((res) => {
+      if (res.payload.emailChangeSuccess) {
+        alert("이메일이 성공적으로 변경되었습니다. 다시 로그인 하여 주십시오");
+        navigation("/");
+      } else {
+        alert("이메일 변경에 실패했습니다. 다시 시도해 주십시오.");
+      }
+    });
+  };
+
+  const usePasswordHandler = (event) => {
+    setUsePassword(event.target.value);
+  };
+  const newPasswordHandler = (event) => {
+    setNewPassword(event.target.value);
+  };
+  const confirmNewPasswordHandler = (event) => {
+    setConfirmNewPassword(event.target.value);
+  };
+
+  const onPasswordChangeHandler = (event) => {
+    event.preventDefault();
+
+    if (newPassword === confirmNewPassword) {
+      setPassworConfirmdMessage("");
+
+      let body = {
+        userUsePassword: usePassword,
+        userNewPassword: newPassword,
+      };
+
+      dispatch(userChangePassword(body)).then((res) => {
+        console.log(res.payload);
+
+        if (!res.payload.userChangePasswordSuccess) {
+          if (res.payload.type === "PASSWORD_MIS_MATCH") {
+            setUsePasswordMessage(res.payload.message);
+            setNewPasswordMessage("");
+            setPassworConfirmdMessage("");
+          } else {
+            setUsePasswordMessage("");
+            setNewPasswordMessage(res.payload.message);
+            setPassworConfirmdMessage("");
+          }
+        } else {
+          alert(
+            "비밀번호가 성공적으로 변경되었습니다. 다시 로그인 하여 주십시오."
+          );
+
+          navigation("/");
+        }
+      });
+    } else {
+      setUsePasswordMessage("");
+      setNewPasswordMessage("");
+
+      setPassworConfirmdMessage("비밀번호가 틀립니다. 다시 확인해주세요");
+    }
+  };
 
   return (
     <div>
@@ -101,7 +181,7 @@ function MyPage() {
       <div>
         <form
           style={{ display: "flex", flexDirection: "column" }}
-          onSubmit={onSubmitHandler}
+          onSubmit={onProfileChangeSubmitHandler}
           encType="multipart/form-data"
         >
           <span>프로필 이미지</span>
@@ -141,14 +221,49 @@ function MyPage() {
           )}
           <button type="submit">asd</button>
         </form>
-        <div>
-          <span>아이디</span>
+        <form onSubmit={onEmailChangeHandler}>
+          <span>이메일</span>
+
+          <div>
+            <input type="email" value={changeEmail} onChange={setEmail} />
+          </div>
+
           <button>계정 이메일 변경</button>
-        </div>
-        <div>
+        </form>
+        <form onSubmit={onPasswordChangeHandler}>
           <span>비밀번호</span>
+
+          <div>
+            <span>현재 비밀번호</span>
+            <input
+              type="password"
+              value={usePassword}
+              onChange={usePasswordHandler}
+            />
+            <span>{usePasswordMessage}</span>
+          </div>
+
+          <div>
+            <span>새 비밀번호</span>
+            <input
+              type="password"
+              value={newPassword}
+              onChange={newPasswordHandler}
+            />
+            <span>{newPasswordMessage}</span>
+          </div>
+          <div>
+            <span>새 비밀번호를 다시 입력하세요</span>
+            <input
+              type="password"
+              value={confirmNewPassword}
+              onChange={confirmNewPasswordHandler}
+            />
+            <span>{passworConfirmdMessage}</span>
+          </div>
+
           <button>비밀번호 변경</button>
-        </div>
+        </form>
         <form>
           <button onClick={onDeleteProfileSubmitHandler}>회원탈퇴</button>
         </form>

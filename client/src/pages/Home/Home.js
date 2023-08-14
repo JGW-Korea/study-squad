@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
 import { useDispatch } from "react-redux";
 
-import { auth2 } from "../../_actions/user_actions";
+import { auth } from "../../_actions/user_actions";
 
 export default function Home() {
   const navigation = useNavigate();
@@ -23,20 +23,15 @@ export default function Home() {
   };
 
   useEffect(() => {
-    dispatch(auth2()).then((res) => {
+    dispatch(auth()).then((res) => {
       if (res.payload) {
         if (res.payload.isLogged) {
           setUserInfo(res.payload.data);
           setLogin(true);
+        } else {
+          setLogin(false);
         }
       }
-
-      // if (res.payload.data.userId) {
-      //   setUserInfo(res.payload.data.userId);
-      //   setLogin(true);
-      // } else {
-      //   setLogin(false);
-      // }
     });
   }, [dispatch]);
 

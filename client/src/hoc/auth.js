@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { auth2 } from "../_actions/user_actions";
+import { auth } from "../_actions/user_actions";
 
 export default function (SpecificComponent, option, adminRoute = null) {
   function AuthenticationCheck() {
@@ -14,10 +14,10 @@ export default function (SpecificComponent, option, adminRoute = null) {
       // option === true     =>  로그인한 유저만 출입이 가능한 페이지
       // option === false    =>  로그인한 유저는 출입 불가능한 페이지
 
-      dispatch(auth2()).then((res) => {
+      dispatch(auth()).then((res) => {
         if (res.payload) {
           // 로그인 하지 않은 상태
-          if (!res.payload.data) {
+          if (!res.payload.isLogged) {
             if (option) {
               navigation("/login");
             }

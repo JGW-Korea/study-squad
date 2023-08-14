@@ -9,6 +9,8 @@ import {
   DELETE_USER_ACCOUNT,
   PROFILE_IMAGE_UPLOAD,
   PROFILE_IMAGE_UPDATE,
+  USER_CHANGE_EMAIL,
+  USER_CHANGE_PASSWORD,
 } from "./types.js";
 
 export function loginUser(dataToSubmit) {
@@ -131,21 +133,41 @@ export function profileImageUpdate(dataToSubmit) {
   };
 }
 
-// 로그인 상태를 확인한다.
-export function auth() {
-  const request = Axios.get("/api/user/loginCheck")
+export function userChangeEmail(dataToSubmit) {
+  const request = Axios.post("/api/user/mypage/changeEmail", {
+    email: dataToSubmit.email,
+  })
+
     .then((res) => res.data)
     .catch((err) => {
       console.log(err);
     });
 
   return {
-    type: AUTH_USER,
+    type: USER_CHANGE_EMAIL,
     payload: request,
   };
 }
 
-export function auth2() {
+export function userChangePassword(dataToSubmit) {
+  const request = Axios.post("/api/user/mypage/changePassword", {
+    userUsePassword: dataToSubmit.userUsePassword,
+    userNewPassword: dataToSubmit.userNewPassword,
+  })
+
+    .then((res) => res.data)
+    .catch((err) => {
+      console.log(err);
+    });
+
+  return {
+    type: USER_CHANGE_PASSWORD,
+    payload: request,
+  };
+}
+
+// 로그인 상태를 확인한다.
+export function auth() {
   const request = Axios.get("/api/user/login/success")
     .then((res) => res.data)
     .catch((err) => {

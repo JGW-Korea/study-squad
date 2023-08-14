@@ -6,3 +6,5 @@ export const USER_PASSWORD_RESET = "user_password_reset";
 export const DELETE_USER_ACCOUNT = "delete_user_account";
 export const PROFILE_IMAGE_UPDATE = "profile_image_upload";
 export const PROFILE_IMAGE_UPLOAD = "profile_image_update";
+export const USER_CHANGE_EMAIL = "user_change_email";
+export const USER_CHANGE_PASSWORD = "user_change_password";
