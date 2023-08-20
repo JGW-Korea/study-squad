@@ -11,7 +11,7 @@ import {
   PROFILE_IMAGE_UPDATE,
   USER_CHANGE_EMAIL,
   USER_CHANGE_PASSWORD,
-} from "./types.js";
+} from "./user_types.js";
 
 export function loginUser(dataToSubmit) {
   const request = Axios.post("/api/user/login", {

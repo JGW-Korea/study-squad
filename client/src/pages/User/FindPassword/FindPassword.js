@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { findUserPassword } from "../../../_actions/user_actions";
+import { findUserPassword } from "../../../_actions/user/user_actions";
 import { useNavigate } from "react-router-dom";
 
 function FindPassword() {

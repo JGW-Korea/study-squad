@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
-import { loginUser } from "../../../_actions/user_actions";
+import { loginUser } from "../../../_actions/user/user_actions";
 
-export default function Login() {
+import Auth from "../../../hoc/auth";
+
+function Login() {
   const dispatch = useDispatch();
   const navigation = useNavigate();
 
@@ -83,3 +85,5 @@ export default function Login() {
     </form>
   );
 }
+
+export default Auth(Login, false);

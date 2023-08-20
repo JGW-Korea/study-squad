@@ -9,7 +9,7 @@ import {
   PROFILE_IMAGE_UPDATE,
   USER_CHANGE_EMAIL,
   USER_CHANGE_PASSWORD,
-} from "../_actions/types";
+} from "../_actions/user/user_types";
 
 export default function (state = {}, action) {
   switch (action.type) {
@@ -31,7 +31,7 @@ export default function (state = {}, action) {
       return { ...state, profileImageUpdate: action.payload };
     case USER_CHANGE_EMAIL:
       return { ...state, userChangeEmail: action.payload };
-    case USER_CHANGE_EMAIL:
+    case USER_CHANGE_PASSWORD:
       return { ...state, userChangePassword: action.payload };
     default:
       return state;

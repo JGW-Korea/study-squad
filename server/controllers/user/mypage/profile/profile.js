@@ -10,15 +10,15 @@ const User = db.User;
 const fs = require("fs");
 
 try {
-  fs.readdirSync("uploads");
+  fs.readdirSync("uploads/profile");
 } catch (error) {
-  console.log("uploads 폴더가 없습니다. 폴더를 생성합니다.");
-  fs.mkdirSync("uploads");
+  console.log("uploads/profile 폴더가 없습니다. 폴더를 생성합니다.");
+  fs.mkdirSync("uploads/profile");
 }
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/");
+    cb(null, "uploads/profile");
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}_${file.originalname}`);
@@ -56,8 +56,6 @@ router.post("/upload", upload.single("image"), async (req, res) => {
 router.post("/update", async (req, res) => {
   try {
     const { email, name, path } = req.body;
-
-    console.log(req.body);
 
     // User Table에 새로운 값들을 각각의 attribute에 넣어준다.
     await User.update(

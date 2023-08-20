@@ -3,9 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
 import { useDispatch } from "react-redux";
 
-import { auth } from "../../_actions/user_actions";
+import { auth } from "../../_actions/user/user_actions";
 
-export default function Home() {
+import Auth from "../../hoc/auth";
+
+function Home() {
   const navigation = useNavigate();
   const dispatch = useDispatch();
 
@@ -43,6 +45,7 @@ export default function Home() {
           <Link to={`/user/mypage/${userInfo.name}`} state={{ data: userInfo }}>
             계정
           </Link>
+          <Link to={"/study-create"}>만들기</Link>
         </div>
       ) : (
         <div>
@@ -53,3 +56,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Auth(Home, null);

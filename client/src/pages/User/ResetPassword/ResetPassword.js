@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { userPasswordReset } from "../../../_actions/user_actions";
+import { userPasswordReset } from "../../../_actions/user/user_actions";
 
 import { useNavigate, useParams } from "react-router-dom";
 

@@ -8,7 +8,7 @@ import {
   auth,
   userChangeEmail,
   userChangePassword,
-} from "../../../_actions/user_actions";
+} from "../../../_actions/user/user_actions";
 import { useNavigate } from "react-router-dom";
 
 function MyPage() {

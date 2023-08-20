@@ -62,8 +62,8 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/success", (req, res) => {
-  if (req.session.userId) {
+router.get("/success", async (req, res) => {
+  if (await req.session.userId) {
     res.json({
       isLogged: true,
       data: req.session.userId,
