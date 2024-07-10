@@ -10,15 +10,15 @@ const User = db.User;
 const fs = require("fs");
 
 try {
-  fs.readdirSync("uploads");
+  fs.readdirSync("uploads/profile");
 } catch (error) {
-  console.log("uploads 폴더가 없습니다. 폴더를 생성합니다.");
-  fs.mkdirSync("uploads");
+  console.log("uploads/profile 폴더가 없습니다. 폴더를 생성합니다.");
+  fs.mkdirSync("uploads/profile");
 }
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/");
+    cb(null, "uploads/profile");
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}_${file.originalname}`);
@@ -41,43 +41,22 @@ const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 router.post("/upload", upload.single("image"), async (req, res) => {
   try {
+    await User.update(
+      {
+        profileImage: req.file.path,
+      },
+      { where: { id: req.session.userId.id, email: req.session.userId.email } }
+    );
+
+    req.session.userId.profileImage = req.file.path;
+
     return res.json({
       imageUpdateSuccess: true,
       url: req.file.path,
-      fileName: req.file.filename,
     });
   } catch (error) {
     return res.json({
       imageUpdateSuccess: false,
-    });
-  }
-});
-
-router.post("/update", async (req, res) => {
-  try {
-    const { email, name, path } = req.body;
-
-    console.log(req.body);
-
-    // User Table에 새로운 값들을 각각의 attribute에 넣어준다.
-    await User.update(
-      {
-        profileImage: path,
-      },
-      { where: { email: email, name: name } }
-    );
-
-    req.session.userId.profileImage = path;
-
-    // 성공하면 Client에 이 정보들을 보내준다.
-    res.status(200).json({
-      userProfileImgUpdateSuccess: true,
-      userInfo: req.session.userId,
-    });
-  } catch (error) {
-    console.log(error);
-    res.json({
-      userProfileImgUpdateSuccess: false,
     });
   }
 });

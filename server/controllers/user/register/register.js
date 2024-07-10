@@ -11,7 +11,7 @@ const saltRounds = 10;
 router.post("/", async (req, res) => {
   try {
     //   // 회원 가입 할 떄 필요한 정보들을 Client에서 가져온 후 각각의 변수에 넣어준다.
-    const { email, password, name, birth } = req.body;
+    const { email, password, name, birth, image } = req.body;
 
     const salt = await bcrypt.genSalt(saltRounds);
     const hash = await bcrypt.hash(password, salt);
@@ -22,6 +22,7 @@ router.post("/", async (req, res) => {
       password: hash,
       name: name,
       birth: new Date(birth),
+      profileImage: image,
     });
 
     // 성공하면 Client에 이 정보들을 보내준다.

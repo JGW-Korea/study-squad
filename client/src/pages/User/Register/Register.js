@@ -7,7 +7,7 @@ import { MONTH } from "../../../constants/Register/MONTH";
 import { DAY } from "../../../constants/Register/DAY";
 
 import { useDispatch } from "react-redux";
-import { registerUser } from "../../../_actions/user_actions";
+import { registerUser } from "../../../_actions/user/user_actions";
 
 export default function Register() {
   const dispatch = useDispatch();

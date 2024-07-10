@@ -7,6 +7,7 @@ const development = {
   database: env.MYSQL_DATABASE,
   host: env.MYSQL_HOST,
   dialect: env.MYSQL_DIALECT,
+  logging: false,
 };
 
 const production = {

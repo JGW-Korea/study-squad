@@ -1,0 +1,68 @@
+.container {
+  height: 100%;
+  overflow-y: scroll;
+  background-color: #f2f2f2;
+}
+
+.container .ql-editor {
+  width: 8.5in;
+  padding: 25px 1in;
+  margin: 1rem;
+}
+
+.container .ql-container.ql-snow {
+  border: none;
+  display: flex;
+  justify-content: center;
+}
+
+.container .ql-toolbar.ql-snow {
+  display: flex;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #f3f3f3;
+  border: none;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.container .ql-editor::-webkit-scrollbar {
+  display: none;
+}
+
+.container .ql-container.ql-bubble {
+  border: none;
+  display: flex;
+  justify-content: center;
+}
+
+/* .container .ql-editor {
+  width: 8.5in;
+  min-height: 11in;
+  padding: 1in;
+  margin: 1rem;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+  background-color: #ffffff;
+}
+
+.container .ql-container.ql-snow {
+  border: none;
+  display: flex;
+  justify-content: center;
+}
+
+.container .ql-toolbar.ql-snow {
+  display: flex;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #f3f3f3;
+  border: none;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+} */

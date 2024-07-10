@@ -11,7 +11,7 @@ import {
   PROFILE_IMAGE_UPDATE,
   USER_CHANGE_EMAIL,
   USER_CHANGE_PASSWORD,
-} from "./types.js";
+} from "./user_types.js";
 
 export function loginUser(dataToSubmit) {
   const request = Axios.post("/api/user/login", {
@@ -32,6 +32,7 @@ export function registerUser(dataToSubmit) {
     password: dataToSubmit.password,
     name: dataToSubmit.name,
     birth: dataToSubmit.birth,
+    image: dataToSubmit.image,
   })
     .then((res) => res.data)
     .catch((err) => {
@@ -150,7 +151,7 @@ export function userChangeEmail(dataToSubmit) {
 }
 
 export function userChangePassword(dataToSubmit) {
-  const request = Axios.post("/api/user/mypage/changePassword", {
+  const request = Axios.post("/api/user/mypage/change/password", {
     userUsePassword: dataToSubmit.userUsePassword,
     userNewPassword: dataToSubmit.userNewPassword,
   })

@@ -13,21 +13,21 @@ router.post("/", async (req, res) => {
 
   // 요청된 이메일을 DB에서 찾는다.
   try {
-    const userInfo = await User.findOne({
+    const user = await User.findOne({
       where: {
         email: { [Op.eq]: email },
       },
     });
 
     // DB에 값이 없을 경우
-    if (!userInfo) {
+    if (!user) {
       return res.json({
         loginSuccess: false,
         message: "해당 이메일은 존재하지 않습니다.",
       });
     } else {
       // 요청된 이메일이 DB에 있다면 비밀번호가 맞는 비밀번호인지 확인한다.
-      const isMatch = await bcrypt.compare(password, userInfo.password);
+      const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
         return res.json({
@@ -38,14 +38,14 @@ router.post("/", async (req, res) => {
         // 이메일에 맞는 비밀번호라면 세션을 생성한다.
         req.session.save(() => {
           req.session.userId = {
-            id: userInfo.id,
-            isAdmin: userInfo.role === "user" ? false : true,
+            id: user.id,
+            isAdmin: user.role === "user" ? false : true,
             isLoggingIn: true,
-            email: userInfo.email,
-            name: userInfo.name,
-            role: userInfo.role,
-            profileImage: userInfo.profileImage,
-            birth: userInfo.birth,
+            email: user.email,
+            name: user.name,
+            role: user.role,
+            profileImage: user.profileImage,
+            birth: user.birth,
           };
 
           const data = req.session;
@@ -62,8 +62,8 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/success", (req, res) => {
-  if (req.session.userId) {
+router.get("/success", async (req, res) => {
+  if (await req.session.userId) {
     res.json({
       isLogged: true,
       data: req.session.userId,
