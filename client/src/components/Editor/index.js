@@ -20,6 +20,7 @@ import {
 import { BsThreeDotsVertical, BsFiletypePdf, BsFileText } from "react-icons/bs";
 import axios from "axios";
 
+// Quill Editor Tool bar Option 종류(커스텀 가능) -> https://quilljs.com/docs/modules/toolbar
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
   [{ list: "ordered" }, { list: "bullet" }],
@@ -94,7 +95,7 @@ function Editor({ socket }) {
     };
   }, [socket, quill]);
 
-  // Editor 이미지 처리 핸들러
+  // Editor 이미지 처리 핸들러 -> base64에서 url로 바꾸는 코드 같음
   useEffect(() => {
     if (socket == null || quill == null) return;
 
@@ -232,6 +233,7 @@ function Editor({ socket }) {
   };
 
   return (
+    // MUI 라이브러리 컴포넌트라 볼 필요 없음
     <Stack sx={{ height: "100%" }}>
       <Box
         p={2}
@@ -302,6 +304,7 @@ function Editor({ socket }) {
         </Stack>
       </Box>
 
+      {/* Quill Editor 컴포넌트 적용 */}
       <div className="container" ref={wrapperRef}></div>
     </Stack>
   );
